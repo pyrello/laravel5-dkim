@@ -17,7 +17,7 @@ class Mailer extends \Illuminate\Mail\Mailer
             $message->from($this->from['address'], $this->from['name']);
         }
 
-        if (config('mail.driver') == 'smtp') {
+        if (in_array(config('mail.driver'), ['mail', 'sendmail', 'smtp'])) {
             if (config('mail.dkim_private_key') && file_exists(config('mail.dkim_private_key'))) {
                 if (config('mail.dkim_selector') && config('mail.dkim_domain')) {
                     $message->attachDkim(config('mail.dkim_selector'), config('mail.dkim_domain'), file_get_contents(config('mail.dkim_private_key')));
